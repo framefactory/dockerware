@@ -1,0 +1,1 @@
+docker build -f mysql.dockerfile -t mysql:latest .

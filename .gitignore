@@ -1,0 +1,6 @@
+images/ubuntu-dev/data/
+images/ubuntu-node/data/
+images/ubuntu-server/www/
+key/
+.idea/
+.DS_Store
