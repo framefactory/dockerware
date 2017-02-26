@@ -1,9 +1,12 @@
 # build the image
 docker build -f ubuntu-server.dockerfile -t ubuntu-server .
 
+$path = $pwd -replace "\\", "/"
+$path = $path -replace ":",""
+
 # copy the private key
 docker run -ti `
-  -v //d/Development/Docker/images/ubuntu-server/key:/key `
+  -v //$path/key:/key `
   --rm `
   ubuntu-server `
   cp /root/.ssh/id_rsa /key/ubuntu-server.pem

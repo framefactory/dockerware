@@ -1,5 +1,8 @@
+$path = $pwd -replace "\\", "/"
+$path = $path -replace ":",""
+
 docker run -d `
-  -v //d/Development/Docker/images/ubuntu-dev/data:/data `
+  -v //$path/data:/data `
   -p 2222:22 `
   --name ubuntu-dev `
   ubuntu-dev `

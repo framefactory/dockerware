@@ -1,5 +1,8 @@
+$path = $pwd -replace "\\", "/"
+$path = $path -replace ":",""
+
 docker run -d `
-  -v //d/Development/Docker/images/ubuntu-server/www:/data/www `
+  -v //$path/www:/data/www `
   -v ubuntu-server-mysql:/data/mysql `
   -p 2223:22 `
   -p 8080:80 `
