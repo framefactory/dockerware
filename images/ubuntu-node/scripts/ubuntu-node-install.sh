@@ -19,7 +19,8 @@ git config --global user.email $GIT_USER_EMAIL
 git config --global user.name $GIT_USER_NAME
 
 # Install Python
-apt-get install python3 python3-pip
+apt-get install -y python
+apt-get install -y python3 python3-pip
 
 # Install SASS, Compass
 apt-get install -y ruby ruby-dev
@@ -56,6 +57,8 @@ node --version
 npm --version
 
 # install global packages
+npm install webpack -g
 npm install browserify -g
+npm install mocha -g
 npm install forever -g
 npm install nodemon -g
