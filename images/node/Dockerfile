@@ -4,7 +4,7 @@
 FROM ubuntu:20.04
 
 # node version
-ENV NODE_VERSION 14.1.0
+ENV NODE_VERSION 14.7.0
 
 # install dependencies
 RUN apt-get update \
