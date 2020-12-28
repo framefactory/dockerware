@@ -4,7 +4,7 @@
 FROM ubuntu:20.04
 
 # node version
-ENV NODE_VERSION 14.7.0
+ENV NODE_VERSION 14.15.3
 
 # install dependencies
 RUN apt-get update \
@@ -19,7 +19,7 @@ RUN echo "alias ..='cd ..'" >> ~/.bash_aliases
 ENV NVM_DIR /usr/local/nvm
 
 RUN mkdir -p $NVM_DIR \
- && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash \
+ && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh"
 
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
