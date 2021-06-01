@@ -1,6 +1,7 @@
 # Node.js on Ubuntu
 ### Description
 Ubuntu Server 20.04 with NVM (node version manager) and pre-installed Node.js and NPM (node package manager).
+
 ### Getting Started
 ```
 # Repository
