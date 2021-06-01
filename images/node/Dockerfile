@@ -34,7 +34,7 @@ RUN apt-get -y autoremove \
  && rm -rf /var/lib/apt/lists/*
 
 # create app directory, set as startup directory
-RUN mkdir /app
+RUN mkdir /app && chown node:node /app
 WORKDIR /app
 
 # entrypoint
