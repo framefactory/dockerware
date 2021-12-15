@@ -2,6 +2,13 @@
 ### Description
 Ubuntu Server 20.04 with NVM (node version manager) and pre-installed Node.js and NPM (node package manager).
 
+### Build Image
+```
+docker build -t node .
+docker tag node node:<tag>
+docker push framefactory/node:<tag>
+```
+
 ### Getting Started
 ```
 # Repository
