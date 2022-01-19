@@ -1,2 +1,0 @@
-docker exec -ti ubuntu-server bash
-

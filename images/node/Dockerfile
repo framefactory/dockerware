@@ -8,7 +8,7 @@ RUN groupadd --gid 1000 node \
  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 # node version
-ENV NODE_VERSION 17.2.0
+ENV NODE_VERSION 17.4.0
 
 # install dependencies
 RUN apt-get update \
@@ -24,7 +24,7 @@ RUN echo "alias ..='cd ..'" >> ~/.bash_aliases
 ENV NVM_DIR /usr/local/nvm
 
 RUN mkdir -p $NVM_DIR \
- && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
+ && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh"
 
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules

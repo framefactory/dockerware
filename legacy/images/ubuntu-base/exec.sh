@@ -1,1 +1,0 @@
-docker exec -ti ubuntu-base bash
