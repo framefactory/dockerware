@@ -8,7 +8,7 @@ RUN groupadd --gid 1000 node \
  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 # node version
-ENV NODE_VERSION 17.9.0
+ENV NODE_VERSION 18.8.0
 
 # install dependencies
 RUN apt-get update \
