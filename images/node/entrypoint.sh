@@ -6,7 +6,7 @@
 set -e
 
 if [ -f "package.json" ] && [ ! -d "node_modules" ]; then
-    npm install
+    pnpm install
 fi
 
 if [ "${1#-}" != "${1}" ] || [ -z "$(command -v "${1}")" ]; then

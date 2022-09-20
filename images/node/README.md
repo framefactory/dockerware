@@ -1,11 +1,12 @@
 # Node.js on Ubuntu
 ### Description
-Ubuntu Server 20.04 with NVM (node version manager) and pre-installed Node.js and NPM (node package manager).
+Ubuntu Server 20.04 with NVM (node version manager) and pre-installed Node.js and PNPM (performant NPM).
 
 ### Build Image
 ```
-docker build -t node .
-docker tag node node:<tag>
+docker build -t framefactory/node:18.9.0 .
+docker tag framefactory/node:18.9.0 framefactory/node:latest
+docker login
 docker push framefactory/node:<tag>
 ```
 
@@ -15,10 +16,11 @@ docker push framefactory/node:<tag>
 https://github.com/framefactory/dockerware/tree/master/images/node
 
 # Usage
-docker pull framefactory/node
-docker run [-ti] node <command>
-docker run [-ti] node index.js
-docker run [-ti] node npm install
+docker pull framefactory/node:latest
+docker run [-ti --rm --user node] framefactory/node <command>
+docker run [-ti --rm --user node] framefactory/node index.js
+docker run [-ti --rm --user node] framefactory/node npm install
+docker run [-ti --rm --user node] framefactory/node bash
 ```
 
 ### Entrypoint

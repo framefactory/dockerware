@@ -8,7 +8,7 @@ RUN groupadd --gid 1000 node \
  && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
 # node version
-ENV NODE_VERSION 18.8.0
+ENV NODE_VERSION 18.9.0
 
 # install dependencies
 RUN apt-get update \
@@ -18,7 +18,10 @@ RUN apt-get update \
  && apt-get install -y python3 python3-pip python-is-python3
 
 # add some additional bash aliases
-RUN echo "alias ..='cd ..'" >> ~/.bash_aliases
+RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/node/.bash_aliases
+
+# increase number of file watchers
+RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm
@@ -27,8 +30,14 @@ RUN mkdir -p $NVM_DIR \
  && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh"
 
+# ensure nvm is available for user 'node'
+RUN cat $NVM_DIR/nvm.sh >> /home/node/.bashrc
+
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# activate pnpm package manager
+RUN corepack enable
 
 # cleanup
 RUN apt-get -y autoremove \
