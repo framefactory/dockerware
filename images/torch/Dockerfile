@@ -1,7 +1,7 @@
 # DOCKER IMAGE SETUP SCRIPT
-# INSTALL UBUNTU WITH NODE.JS
+# INSTALL UBUNTU WITH CUDA, PYTHON, PYTORCH
 
-FROM ubuntu:22.04
+FROM nvidia/cuda:11.8.0-base-ubuntu22.04
 
 # add user with UID 1000
 ENV USER sentinel
@@ -21,6 +21,16 @@ RUN apt-get update \
 # add some additional bash aliases
 RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER/.bash_aliases
 
+############################
+# PYTHON / PYTORCH
+
+RUN python -m pip install numpy scipy matplotlib pillow \
+                           torch torchvision opencv-python \
+ && python -m pip cache purge
+
+############################
+# NODE.JS
+
 # node version
 ENV NODE_VERSION 19.1.0
 
@@ -31,7 +41,7 @@ RUN mkdir -p $NVM_DIR \
  && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh"
 
-# ensure nvm is available for user 'node'
+# ensure nvm is available for user
 RUN cat $NVM_DIR/nvm.sh >> /home/$USER/.bashrc
 
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
