@@ -4,7 +4,7 @@
 FROM ubuntu:22.04
 
 # add user with UID 1000
-ENV USER sentinel
+ENV USER node
 RUN groupadd --gid 1000 $USER \
  && useradd --uid 1000 --gid $USER --shell /bin/bash --create-home $USER
 
