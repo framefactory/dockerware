@@ -4,9 +4,9 @@
 FROM nvidia/cuda:11.8.0-base-ubuntu22.04
 
 # add user with UID 1000
-ENV USER sentinel
-RUN groupadd --gid 1000 $USER \
- && useradd --uid 1000 --gid $USER --shell /bin/bash --create-home $USER
+ENV USER_NAME user
+RUN groupadd --gid 1000 $USER_NAME \
+ && useradd --uid 1000 --gid $USER_NAME --shell /bin/bash --create-home $USER_NAME
 
 # install dependencies
 RUN apt-get update \
@@ -19,7 +19,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # add some additional bash aliases
-RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER/.bash_aliases
+RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
 
 ############################
 # PYTHON / PYTORCH
@@ -42,7 +42,7 @@ RUN mkdir -p $NVM_DIR \
  && /bin/bash -c "source $NVM_DIR/nvm.sh"
 
 # ensure nvm is available for user
-RUN cat $NVM_DIR/nvm.sh >> /home/$USER/.bashrc
+RUN cat $NVM_DIR/nvm.sh >> /home/$USER_NAME/.bashrc
 
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
@@ -51,7 +51,7 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN corepack enable
 
 # create app directory, set as startup directory
-RUN mkdir /app && chown $USER:$USER /app
+RUN mkdir /app && chown $USER_NAME:$USER_NAME /app
 WORKDIR /app
 
 # entrypoint

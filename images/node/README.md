@@ -1,11 +1,11 @@
 # Node.js on Ubuntu
 ### Description
-Ubuntu Server 20.04 with NVM (node version manager) and pre-installed Node.js and PNPM (performant NPM).
+Ubuntu Server 22.04 with NVM (node version manager) and pre-installed Node.js and PNPM (performant NPM).
 
 ### Build Image
 ```
-docker build -t framefactory/node:18.9.0 .
-docker tag framefactory/node:18.9.0 framefactory/node:latest
+docker build -t framefactory/node:19.1.0 .
+docker tag framefactory/node:19.1.0 framefactory/node:latest
 docker login
 docker push framefactory/node:<tag>
 ```
