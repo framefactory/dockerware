@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ENTRY POINT SCRIPT FOR DOCKER TORCH IMAGE
+# ENTRY POINT SCRIPT FOR DOCKER NODE IMAGE
 # Source: https://github.com/nodejs/docker-node/blob/master/14/stretch-slim/docker-entrypoint.sh
 
 set -e

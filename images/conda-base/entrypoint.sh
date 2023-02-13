@@ -1,12 +1,9 @@
 #!/bin/bash
 
-# ENTRY POINT SCRIPT FOR PYTHON-NODE IMAGE
+# ENTRY POINT SCRIPT FOR DOCKER NODE IMAGE
 # Source: https://github.com/nodejs/docker-node/blob/master/14/stretch-slim/docker-entrypoint.sh
 
 set -e
-
-/opt/miniconda/bin/conda init
-source ~/.bashrc
 
 if [ -f "package.json" ] && [ ! -d "node_modules" ]; then
     pnpm install
