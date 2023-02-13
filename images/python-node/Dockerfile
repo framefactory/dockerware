@@ -1,7 +1,7 @@
 # DOCKER IMAGE SETUP SCRIPT
 # INSTALL UBUNTU WITH CUDA, PYTHON, PYTORCH
 
-FROM nvidia/cuda:11.8.0-base-ubuntu22.04
+FROM ubuntu:22.04
 
 # add user with UID 1000
 ENV USER_NAME user
@@ -11,12 +11,14 @@ RUN groupadd --gid 1000 $USER_NAME \
 # install dependencies
 RUN apt-get update \
  && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends \
-    curl wget vim git dos2unix build-essential ca-certificates libssl-dev \
-    python3 python3-pip python-is-python3 \
+ && apt-get install -y --no-install-recommends ca-certificates curl wget vim git \
+    build-essential libssl-dev \
  && apt-get -y autoremove \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+# TEMPORARY!!!
+# RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl wget vim git
 
 # add some additional bash aliases
 RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
@@ -24,11 +26,19 @@ RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_alias
 ############################
 # PYTHON / PYTORCH
 
-RUN python -m pip install  jupyter ipykernel \
-                           numpy scipy matplotlib scikit-learn pillow tqdm \
-                           tensorboard transformers datasets evaluate \
-                           torch torchvision opencv-python \
- && python -m pip cache purge
+# install miniconda
+ENV CONDA_DIR /opt/miniconda
+WORKDIR /home/$USER_NAME
+RUN curl -o miniconda-install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+ && bash miniconda-install.sh -b -p $CONDA_DIR \
+ && eval "$($CONDA_DIR/bin/conda shell.bash hook)" \
+ && conda init --system \
+ && conda create -n deep python=3.10 \
+ && conda activate deep \
+ && conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia \
+ && conda install -c conda-forge numpy scipy sympy pandas matplotlib pillow tqdm tensorboard einops scikit-learn librosa \
+ && conda install -c conda-forge jupyter ipykernel ipywidgets \
+ && conda clean --all
 
 ############################
 # NODE.JS
@@ -51,6 +61,9 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # activate pnpm package manager
 RUN corepack enable
+
+#############################
+# ENTRYPOINT
 
 # create app directory, set as startup directory
 RUN mkdir /app && chown $USER_NAME:$USER_NAME /app

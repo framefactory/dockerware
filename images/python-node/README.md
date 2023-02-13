@@ -1,26 +1,26 @@
-# PyTorch/CUDA on Ubuntu
+# Node.js and Python with Conda on Ubuntu 22.04
 ### Description
-Ubuntu Server 20.04 with Python 3.10, PyTorch 1.13.1, CUDA 11.8.
+Ubuntu Server 22.04 with Python 3.10 and Node.js 
 
 ### Build Image
 ```
-docker build -t framefactory/torch:1.13.1 .
-docker tag framefactory/torch:1.13.1 framefactory/torch:latest
+docker build -t framefactory/python-node:1.0 .
+docker tag framefactory/python-node:1.0 framefactory/python-node:latest
 docker login
-docker push framefactory/torch:<tag>
+docker push framefactory/python-node:<tag>
 ```
 
 ### Getting Started
 ```
 # Repository
-https://github.com/framefactory/dockerware/tree/master/images/torch
+https://github.com/framefactory/dockerware/tree/master/images/python-node
 
 # Usage
-docker pull framefactory/torch:latest
-docker run [-ti --rm --user torch] framefactory/torch <command>
-docker run [-ti --rm --user torch] framefactory/torch index.js
-docker run [-ti --rm --user torch] framefactory/torch npm install
-docker run [-ti --rm --user torch] framefactory/torch bash
+docker pull framefactory/python-node:latest
+docker run [-ti --rm --user user] framefactory/python-node <command>
+docker run [-ti --rm --user user] framefactory/python-node index.js
+docker run [-ti --rm --user user] framefactory/python-node npm install
+docker run [-ti --rm --user user] framefactory/python-node bash
 ```
 
 ### Entrypoint

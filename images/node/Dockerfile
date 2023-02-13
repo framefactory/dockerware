@@ -22,7 +22,7 @@ RUN apt-get update \
 RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
 
 # node version
-ENV NODE_VERSION 19.3.0
+ENV NODE_VERSION 19.6.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm
