@@ -49,7 +49,7 @@ RUN $CONDA_CMD init
 USER root
 
 # node version
-ENV NODE_VERSION 19.6.0
+ENV NODE_VERSION 19.7.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm
