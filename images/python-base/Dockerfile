@@ -17,7 +17,7 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
     curl wget vim git dos2unix build-essential ca-certificates libssl-dev \
-    python3 python3-pip python-is-python3 \
+    python3 python3-venv python3-pip python-is-python3 \
  && apt-get -y autoremove \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
