@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t framefactory/conda-torch .
+docker build -t framefactory/conda-torch:latest .

@@ -7,7 +7,7 @@ ENV USER_NAME main
 USER root
 
 # node version
-ENV NODE_VERSION 20.0.0
+ENV NODE_VERSION 20.3.0
 
 # install chrome
 ENV CHROME_PACKAGE google-chrome-stable_current_amd64.deb

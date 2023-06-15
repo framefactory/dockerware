@@ -5,8 +5,8 @@ Also installes Chrome, used for Puppeteer automation.
 
 ### Build Image
 ```
-docker build -t framefactory/node:20.0.0 .
-docker tag framefactory/node:20.0.0 framefactory/node:latest
+docker build -t framefactory/node:20.3.0 .
+docker tag framefactory/node:20.3.0 framefactory/node:latest
 docker login
 docker push framefactory/node:<tag>
 ```

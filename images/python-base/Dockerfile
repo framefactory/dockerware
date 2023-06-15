@@ -31,7 +31,7 @@ RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_alias
 USER root
 
 # node version
-ENV NODE_VERSION 19.7.0
+ENV NODE_VERSION 20.3.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm
