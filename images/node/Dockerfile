@@ -7,7 +7,7 @@ ENV USER_NAME main
 USER root
 
 # node version
-ENV NODE_VERSION 20.8.0
+ENV NODE_VERSION 21.1.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm

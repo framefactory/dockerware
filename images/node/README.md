@@ -4,8 +4,8 @@ Ubuntu Server 22.04 with NVM (node version manager) and pre-installed Node.js an
 
 ### Build Image
 ```
-docker build -t framefactory/node:20.8.0 .
-docker tag framefactory/node:20.8.0 framefactory/node:latest
+docker build -t framefactory/node:21.1.0 .
+docker tag framefactory/node:21.1.0 framefactory/node:latest
 docker login
 docker push framefactory/node:<tag>
 ```

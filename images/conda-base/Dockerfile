@@ -1,7 +1,7 @@
 # DOCKER IMAGE SETUP SCRIPT
 # INSTALL UBUNTU WITH CUDA, PYTHON, PYTORCH
 
-FROM nvidia/cuda:12.0.1-runtime-ubuntu22.04
+FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 # add user with UID 1000
 ENV USER_NAME main
@@ -50,13 +50,13 @@ RUN $CONDA_CMD init
 USER root
 
 # node version
-ENV NODE_VERSION 20.3.1
+ENV NODE_VERSION 21.1.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm
 
 RUN mkdir -p $NVM_DIR \
- && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash \
+ && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh" \
  && chown -R $USER_NAME:$USER_NAME $NVM_DIR \
  && cat $NVM_DIR/nvm.sh >> /home/$USER_NAME/.bashrc

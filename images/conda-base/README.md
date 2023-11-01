@@ -1,6 +1,7 @@
 # Node.js and Python with Conda on Ubuntu 22.04
 ### Description
-Ubuntu Server 22.04 with Python 3.10, Conda and Node.js 
+Ubuntu Server 22.04 with Python 3.10, Conda and Node.js 21.1.0
+based on NVIDIA/CUDA 12.2.2-runtime-ubuntu22.04
 
 ### Build Image
 ```
