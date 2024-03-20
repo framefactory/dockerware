@@ -19,7 +19,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # add some additional bash aliases
-RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
+RUN echo "alias ll='ls -lha' cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
 
 # create app directory
 RUN mkdir /app && chown $USER_NAME:$USER_NAME /app
