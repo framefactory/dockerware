@@ -4,7 +4,7 @@
 FROM ubuntu:22.04
 
 # add user with UID 1000
-ENV USER_NAME main
+ENV USER_NAME=main
 RUN groupadd --gid 1000 $USER_NAME \
  && useradd --uid 1000 --gid $USER_NAME --shell /bin/bash --create-home $USER_NAME
 
