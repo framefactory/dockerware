@@ -1,10 +1,10 @@
 # DOCKER IMAGE SETUP SCRIPT
-# INSTALL UBUNTU WITH CUDA, PYTHON, PYTORCH
+# INSTALL UBUNTU WITH BLENDER, NODE.JS
 
-FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
+FROM nvidia/cuda:12.6.2-runtime-ubuntu22.04
 
 # add user with UID 1000
-ENV USER_NAME main
+ENV USER_NAME=main
 
 RUN groupadd --gid 1000 $USER_NAME \
  && useradd --uid 1000 --gid $USER_NAME --shell /bin/bash --create-home $USER_NAME
@@ -17,7 +17,7 @@ RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y --no-install-recommends \
     curl wget vim git dos2unix build-essential ca-certificates libssl-dev \
-    python3 python3-pip python-is-python3 \
+    xz-utils python3 python3-pip python-is-python3 \
     ffmpeg libsm6 libxext6 \
  && apt-get -y autoremove \
  && apt-get clean \
@@ -27,22 +27,25 @@ RUN apt-get update \
 RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
 
 ####################
-# CONDA
+# BLENDER
 
-# install miniconda
-ENV CONDA_DIR /opt/miniconda
-ENV CONDA_SCRIPT /var/cache/miniconda-install.sh
-ENV CONDA_CMD $CONDA_DIR/bin/conda
+# blender version
+ENV BLENDER_VERSION=4.2.3-linux-x64
+ENV BLENDER_MAJOR_VERSION=4.2
+ENV BLENDER_URL="https://mirrors.de.sahilister.net/blender/release/Blender$BLENDER_MAJOR_VERSION/blender-$BLENDER_VERSION.tar.xz"
+ENV BLENDER_INSTALL_DIR="/opt/blender-$BLENDER_VERSION"
+ENV BLENDER_BIN=$BLENDER_INSTALL_DIR/blender
 
-USER root
+# download and extract blender
+RUN curl -o /tmp/blender-$BLENDER_VERSION.tar.xz $BLENDER_URL \
+ && tar -xvf /tmp/blender-$BLENDER_VERSION.tar.xz -C /opt/ \
+ && rm /tmp/blender-$BLENDER_VERSION.tar.xz
 
-RUN curl -o $CONDA_SCRIPT https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
- && bash $CONDA_SCRIPT -b -p $CONDA_DIR \
- && chown -R $USER_NAME:$USER_NAME $CONDA_DIR \
- && $CONDA_CMD clean --all
+# add blender to user's PATH
+RUN echo "export PATH=$BLENDER_INSTALL_DIR:$PATH" >> /home/$USER_NAME/.bashrc
 
-USER $USER_NAME
-RUN $CONDA_CMD init
+# add blender to user's aliases
+RUN echo "alias blender='$BLENDER_BIN'" >> /home/$USER_NAME/.bash_aliases
 
 ####################
 # NODE.JS
@@ -50,10 +53,10 @@ RUN $CONDA_CMD init
 USER root
 
 # node version
-ENV NODE_VERSION 23.0.0
+ENV NODE_VERSION=23.0.0
 
 # install node version manager, node, and update npm
-ENV NVM_DIR /usr/local/nvm
+ENV NVM_DIR=/usr/local/nvm
 
 RUN mkdir -p $NVM_DIR \
  && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash \
@@ -61,8 +64,8 @@ RUN mkdir -p $NVM_DIR \
  && chown -R $USER_NAME:$USER_NAME $NVM_DIR \
  && cat $NVM_DIR/nvm.sh >> /home/$USER_NAME/.bashrc
 
-ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ENV NODE_PATH=$NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # activate pnpm package manager
 RUN corepack enable \

@@ -7,7 +7,7 @@ ENV USER_NAME=main
 USER root
 
 # node version
-ENV NODE_VERSION=22.9.0
+ENV NODE_VERSION=23.0.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR=/usr/local/nvm
