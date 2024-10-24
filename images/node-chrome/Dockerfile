@@ -7,7 +7,7 @@ ENV USER_NAME=main
 USER root
 
 # install chrome
-ENV CHROME_PACKAGE google-chrome-stable_current_amd64.deb
+ENV CHROME_PACKAGE=google-chrome-stable_current_amd64.deb
 RUN wget https://dl.google.com/linux/direct/$CHROME_PACKAGE \
  && apt-get update \
  && apt-get upgrade -y \

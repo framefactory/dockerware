@@ -3,10 +3,13 @@
 Ubuntu Server 22.04 with NVM (node version manager) and pre-installed Node.js and PNPM (performant NPM).
 Also installes Chrome, used for Puppeteer automation.
 
+- Node version: 23.0.0
+- Chrome version: latest (currently 130.0.6723.69)
+
 ### Build Image
 ```
-docker build -t framefactory/node:20.3.0 .
-docker tag framefactory/node:20.3.0 framefactory/node:latest
+docker build -t framefactory/node:23.0.0 .
+docker tag framefactory/node:23.0.0 framefactory/node:latest
 docker login
 docker push framefactory/node:<tag>
 ```
