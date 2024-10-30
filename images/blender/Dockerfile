@@ -32,14 +32,20 @@ RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_alias
 # blender version
 ENV BLENDER_VERSION=4.2.3-linux-x64
 ENV BLENDER_MAJOR_VERSION=4.2
+ENV BLENDER_PYTHON=python3.11
 ENV BLENDER_URL="https://mirrors.de.sahilister.net/blender/release/Blender$BLENDER_MAJOR_VERSION/blender-$BLENDER_VERSION.tar.xz"
 ENV BLENDER_INSTALL_DIR="/opt/blender-$BLENDER_VERSION"
 ENV BLENDER_BIN=$BLENDER_INSTALL_DIR/blender
+ENV BLENDER_PYTHON_BIN=$BLENDER_INSTALL_DIR/$BLENDER_MAJOR_VERSION/python/bin/$BLENDER_PYTHON
 
 # download and extract blender
 RUN curl -o /tmp/blender-$BLENDER_VERSION.tar.xz $BLENDER_URL \
  && tar -xvf /tmp/blender-$BLENDER_VERSION.tar.xz -C /opt/ \
- && rm /tmp/blender-$BLENDER_VERSION.tar.xz
+ && rm /tmp/blender-$BLENDER_VERSION.tar.xz \
+ && ${BLENDER_PYTHON_BIN} -m ensurepip \
+ && ${BLENDER_PYTHON_BIN} -m pip install --upgrade pip \
+ && ${BLENDER_PYTHON_BIN} -m pip install --upgrade pillow pydantic dacite python-slugify \
+ && chown -R $USER_NAME:$USER_NAME $BLENDER_INSTALL_DIR
 
 # add blender to user's PATH
 RUN echo "export PATH=$BLENDER_INSTALL_DIR:$PATH" >> /home/$USER_NAME/.bashrc
