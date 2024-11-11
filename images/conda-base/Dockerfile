@@ -1,7 +1,7 @@
 # DOCKER IMAGE SETUP SCRIPT
 # INSTALL UBUNTU WITH CUDA, PYTHON, PYTORCH
 
-FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
+FROM nvidia/cuda:12.6.2-runtime-ubuntu22.04
 
 # add user with UID 1000
 ENV USER_NAME main
@@ -50,7 +50,7 @@ RUN $CONDA_CMD init
 USER root
 
 # node version
-ENV NODE_VERSION 23.0.0
+ENV NODE_VERSION 23.1.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm

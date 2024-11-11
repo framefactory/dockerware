@@ -1,6 +1,6 @@
 # Deep Learning Development
 ### Description
-Ubuntu Server 22.04 with Node.js, Python 3.10, Conda, PyTorch 1.13.1
+Ubuntu Server 22.04 with Node.js, Python 3.10, Conda, PyTorch
 
 ### Build Image
 ```

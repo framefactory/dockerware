@@ -1,33 +1,14 @@
 # DOCKER IMAGE SETUP SCRIPT
 # INSTALL UBUNTU WITH BLENDER, NODE.JS
 
-FROM nvidia/cuda:12.6.2-runtime-ubuntu22.04
+FROM framefactory/conda-torch:latest
 
-# add user with UID 1000
 ENV USER_NAME=main
-
-RUN groupadd --gid 1000 $USER_NAME \
- && useradd --uid 1000 --gid $USER_NAME --shell /bin/bash --create-home $USER_NAME
-
-####################
-# UBUNTU DEV
-
-# install dependencies (ffmpeg, etc. are required by opencv)
-RUN apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y --no-install-recommends \
-    curl wget vim git dos2unix build-essential ca-certificates libssl-dev \
-    xz-utils python3 python3-pip python-is-python3 \
-    ffmpeg libsm6 libxext6 \
- && apt-get -y autoremove \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-# add some additional bash aliases
-RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_aliases
 
 ####################
 # BLENDER
+
+USER root
 
 # blender version
 ENV BLENDER_VERSION=4.2.3-linux-x64
@@ -87,9 +68,11 @@ CMD ["node"]
 ####################
 # APP DIR
 
+# APP DIR HAS ALREADY BEEN CREATED IN THE BASE IMAGE
+
 # create app directory
-RUN mkdir /app && chown $USER_NAME:$USER_NAME /app
-WORKDIR /app
+# RUN mkdir /app && chown $USER_NAME:$USER_NAME /app
+# WORKDIR /app
 
 # set default user
 USER $USER_NAME
