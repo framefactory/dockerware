@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run --name blender-torch-bash --rm -ti --gpus all framefactory/blender-torch:latest bash
+docker run --name blender-torch-bash --user root --rm -ti --gpus all --runtime nvidia framefactory/blender-torch:latest bash
