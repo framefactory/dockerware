@@ -10,6 +10,14 @@ ENV USER_NAME=main
 
 USER root
 
+# SUPPORT FOR GRAPHICS DRIVER, CHECK IF REALLY NEEDED
+RUN apt-get update \
+ && apt-get install -y libfreetype6 libglu1-mesa libxi6 libxrender1 xz-utils \
+ && apt-get -y autoremove \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+# SUPPORT FOR GRAPHICS DRIVER, CHECK IF REALLY NEEDED
+ 
 # blender version
 ENV BLENDER_VERSION=4.2.3-linux-x64
 ENV BLENDER_MAJOR_VERSION=4.2
