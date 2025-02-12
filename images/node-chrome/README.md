@@ -3,28 +3,31 @@
 Ubuntu Server 22.04 with NVM (node version manager) and pre-installed Node.js and PNPM (performant NPM).
 Also installes Chrome, used for Puppeteer automation.
 
-- Node version: 23.0.0
-- Chrome version: latest (currently 130.0.6723.69)
+- Node version: 23.7.0
+- Chrome version: latest (currently 133.0.6943.53)
 
 ### Build Image
 ```
-docker build -t framefactory/node:23.0.0 .
-docker tag framefactory/node:23.0.0 framefactory/node:latest
+docker build -t framefactory/node-chrome:133 .
+docker tag framefactory/node-chrome:133 framefactory/node-chrome:latest
 docker login
-docker push framefactory/node:<tag>
+docker push framefactory/node-chrome:<tag>
 ```
 
 ### Getting Started
 ```
 # Repository
-https://github.com/framefactory/dockerware/tree/master/images/node
+https://github.com/framefactory/dockerware/tree/master/images/node-chrome
 
 # Usage
-docker pull framefactory/node:latest
-docker run [-ti --rm --user node] framefactory/node <command>
-docker run [-ti --rm --user node] framefactory/node index.js
-docker run [-ti --rm --user node] framefactory/node npm install
-docker run [-ti --rm --user node] framefactory/node bash
+docker pull framefactory/node-chrome:latest
+docker run [-ti --rm --user node] framefactory/node-chrome <command>
+docker run [-ti --rm --user node] framefactory/node-chrome index.js
+docker run [-ti --rm --user node] framefactory/node-chrome npm install
+docker run [-ti --rm --user node] framefactory/node-chrome bash
+
+# In the running container, check the chrome version as follows
+google-chrome --version
 ```
 
 ### Entrypoint

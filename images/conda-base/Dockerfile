@@ -1,7 +1,7 @@
 # DOCKER IMAGE SETUP SCRIPT
 # INSTALL UBUNTU WITH CUDA, PYTHON, PYTORCH
 
-FROM nvidia/cuda:12.6.2-runtime-ubuntu22.04
+FROM nvidia/cuda:12.8.0-runtime-ubuntu22.04
 
 # add user with UID 1000
 ENV USER_NAME main
@@ -50,7 +50,7 @@ RUN $CONDA_CMD init
 USER root
 
 # node version
-ENV NODE_VERSION 23.1.0
+ENV NODE_VERSION 23.7.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR /usr/local/nvm
@@ -65,8 +65,10 @@ ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # activate pnpm package manager
-RUN corepack enable \
- && corepack prepare pnpm@latest --activate
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+RUN corepack enable pnpm \
+ && corepack install --global pnpm@10.3.0
 
 # entrypoint
 COPY entrypoint.sh /usr/local/bin/

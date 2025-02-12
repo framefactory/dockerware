@@ -10,12 +10,12 @@ ENV CONDA_CMD=/opt/miniconda/bin/conda
 
 RUN eval "$($CONDA_CMD shell.bash hook)" \
  && conda init \
- && conda create -y -n torch python=3.10 \
+ && conda create -y -n torch python=3.11 \
  && conda activate torch \
- && conda install -y pytorch torchvision pytorch-cuda=12.4 -c pytorch -c nvidia \
-# && conda install -y -c conda-forge jupyter ipykernel ipywidgets \
- && python -m pip install --upgrade opencv-python einops scipy scikit-learn scikit-image matplotlib \
- && python -m pip install --upgrade diffusers transformers datasets peft accelerate \
- && python -m pip install --upgrade tqdm pydantic dacite watchdog python-slugify \
- && python -m pip cache purge \
+ && pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126 \
+# && pip install --upgrade jupyter ipykernel ipywidgets \
+ && pip install --upgrade opencv-python einops scipy scikit-learn scikit-image matplotlib \
+ && pip install --upgrade diffusers transformers datasets peft accelerate \
+ && pip install --upgrade tqdm pydantic dacite watchdog python-slugify imagededup \
+ && pip cache purge \
  && conda clean --all
