@@ -9,10 +9,12 @@ USER $USER_NAME
 ENV CONDA_CMD=/opt/miniconda/bin/conda
 
 RUN eval "$($CONDA_CMD shell.bash hook)" \
+ && conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main \
+ && conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r \
  && conda init \
- && conda create -y -n torch python=3.11 \
+ && conda create -y -n torch python=3.12 \
  && conda activate torch \
- && pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126 \
+ && pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128 \
 # && pip install --upgrade jupyter ipykernel ipywidgets \
  && pip install --upgrade opencv-python einops scipy scikit-learn scikit-image matplotlib \
  && pip install --upgrade diffusers transformers datasets peft accelerate \
