@@ -20,7 +20,8 @@ RUN wget https://dl.google.com/linux/direct/$CHROME_PACKAGE \
  && rm -rf /var/lib/apt/lists/*
 
 # node version
-ENV NODE_VERSION=24.5.0
+ARG NODE_VERSION=25.2.1
+ARG PNPM_VERSION=10.27.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR=/usr/local/nvm
@@ -37,8 +38,9 @@ ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # activate pnpm package manager
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
-RUN corepack enable pnpm \
- && corepack install --global pnpm@10.14.0
+RUN npm install -g corepack \
+ && corepack enable pnpm \
+ && corepack use pnpm@${PNPM_VERSION}
 
 # entrypoint
 COPY entrypoint.sh /usr/local/bin/

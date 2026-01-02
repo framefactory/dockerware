@@ -1,7 +1,7 @@
 # DOCKER IMAGE SETUP SCRIPT
 # INSTALL UBUNTU WITH BLENDER, NODE.JS
 
-FROM nvidia/cuda:12.9.1-runtime-ubuntu22.04
+FROM nvidia/cuda:13.1.0-runtime-ubuntu22.04
 
 # add user with UID 1000
 ENV USER_NAME=main
@@ -30,8 +30,8 @@ RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_alias
 # BLENDER
 
 # blender version
-ENV BLENDER_VERSION=4.5.1-linux-x64
-ENV BLENDER_MAJOR_VERSION=4.5
+ENV BLENDER_VERSION=5.0.1-linux-x64
+ENV BLENDER_MAJOR_VERSION=5.0
 ENV BLENDER_PYTHON=python3.11
 ENV BLENDER_URL="https://ftp.nluug.nl/pub/graphics/blender/release/Blender$BLENDER_MAJOR_VERSION/blender-$BLENDER_VERSION.tar.xz"
 ENV BLENDER_INSTALL_DIR="/opt/blender-$BLENDER_VERSION"
@@ -59,7 +59,8 @@ RUN echo "alias blender='$BLENDER_BIN'" >> /home/$USER_NAME/.bash_aliases
 USER root
 
 # node version
-ENV NODE_VERSION=24.5.0
+ARG NODE_VERSION=25.2.1
+ARG PNPM_VERSION=10.27.0
 
 # install node version manager, node, and update npm
 ENV NVM_DIR=/usr/local/nvm
@@ -76,8 +77,9 @@ ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # activate pnpm package manager
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
-RUN corepack enable pnpm \
- && corepack install --global pnpm@10.14.0
+RUN npm install -g corepack \
+ && corepack enable pnpm \
+ && corepack use pnpm@${PNPM_VERSION}
 
 # entrypoint
 COPY entrypoint.sh /usr/local/bin/
