@@ -50,13 +50,14 @@ RUN $CONDA_CMD init
 USER root
 
 # node version
-ENV NODE_VERSION=24.5.0
+ARG NODE_VERSION=25.8.1
+ARG PNPM_VERSION=10.32.1
 
 # install node version manager, node, and update npm
 ENV NVM_DIR=/usr/local/nvm
 
 RUN mkdir -p $NVM_DIR \
- && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
+ && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh" \
  && chown -R $USER_NAME:$USER_NAME $NVM_DIR \
  && cat $NVM_DIR/nvm.sh >> /home/$USER_NAME/.bashrc
@@ -67,8 +68,9 @@ ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # activate pnpm package manager
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
-RUN corepack enable pnpm \
- && corepack install --global pnpm@10.14.0
+RUN npm install -g corepack \
+ && corepack enable pnpm \
+ && corepack use pnpm@${PNPM_VERSION}
 
 # entrypoint
 COPY entrypoint.sh /usr/local/bin/

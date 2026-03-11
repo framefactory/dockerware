@@ -20,14 +20,14 @@ RUN wget https://dl.google.com/linux/direct/$CHROME_PACKAGE \
  && rm -rf /var/lib/apt/lists/*
 
 # node version
-ARG NODE_VERSION=25.2.1
-ARG PNPM_VERSION=10.27.0
+ARG NODE_VERSION=25.8.1
+ARG PNPM_VERSION=10.32.1
 
 # install node version manager, node, and update npm
 ENV NVM_DIR=/usr/local/nvm
 
 RUN mkdir -p $NVM_DIR \
- && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
+ && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash \
  && /bin/bash -c "source $NVM_DIR/nvm.sh" \
  && chown -R $USER_NAME:$USER_NAME $NVM_DIR \
  && cat $NVM_DIR/nvm.sh >> /home/$USER_NAME/.bashrc

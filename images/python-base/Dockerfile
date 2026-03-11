@@ -31,7 +31,8 @@ RUN echo "alias cda='cd /app'\nalias ..='cd ..'" >> /home/$USER_NAME/.bash_alias
 USER root
 
 # node version
-ENV NODE_VERSION=23.0.0
+ARG NODE_VERSION=25.8.1
+ARG PNPM_VERSION=10.32.1
 
 # install node version manager, node, and update npm
 ENV NVM_DIR=/usr/local/nvm
@@ -46,8 +47,11 @@ ENV NODE_PATH=$NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # activate pnpm package manager
-RUN corepack enable \
- && corepack prepare pnpm@latest --activate
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
+RUN npm install -g corepack \
+ && corepack enable pnpm \
+ && corepack use pnpm@${PNPM_VERSION}
 
 # entrypoint
 COPY entrypoint.sh /usr/local/bin/
